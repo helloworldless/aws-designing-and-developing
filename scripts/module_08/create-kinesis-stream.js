@@ -1,19 +1,26 @@
-// Imports
-const AWS = require('aws-sdk')
+const AWS = require("aws-sdk");
 
-AWS.config.update({ region: '/* TODO: Add your region */' })
+AWS.config.update({ region: "us-east-1" });
 
-// Declare local variables
-// TODO: Create kinesis object
-const streamName = 'hamster-race-results'
+const kinesis = new AWS.Kinesis();
 
-createKinesisStream(streamName)
-.then(data => console.log(data))
+const streamName = "hamster-race-results";
 
-function createKinesisStream (streamName) {
-  // TODO: Create params const
+createKinesisStream(streamName).then((data) => console.log(data));
+
+function createKinesisStream(streamName) {
+  const params = {
+    ShardCount: 1,
+    StreamName: streamName,
+  };
 
   return new Promise((resolve, reject) => {
-    // TODO: Create kinesis stream
-  })
+    kinesis.createStream(params, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve();
+      }
+    });
+  });
 }

@@ -1,11 +1,11 @@
-// Imports
 const AWS = require('aws-sdk')
 
 AWS.config.update({ region: '/* TODO: Add your region */' })
 
-// Declare local variables
 const route53 = new AWS.Route53()
 const hzId = '/* TODO: Add your hostedzone id */'
+
+// Didn't do this part of the course
 
 createRecordSet(hzId)
 .then(data => console.log(data))

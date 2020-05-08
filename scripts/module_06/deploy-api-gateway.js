@@ -1,9 +1,7 @@
-// Imports
 const AWS = require("aws-sdk");
 
 AWS.config.update({ region: "us-east-1" });
 
-// Declare local variables
 const apiG = new AWS.APIGateway();
 const apiId = "tth1ftk7x5";
 

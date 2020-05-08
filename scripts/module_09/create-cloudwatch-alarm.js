@@ -1,22 +1,42 @@
-// Imports
-const AWS = require('aws-sdk')
+const AWS = require("aws-sdk");
 
-AWS.config.update({ region: '/* TODO: Add your region */' })
+AWS.config.update({ region: "us-east-1" });
 
-// Declare local variables
-const cw = new AWS.CloudWatch()
-const alarmName = 'hamster-elb-alarm'
-const topicArn = '/* TODO: Add your SNS topic ARN */'
-const tg = '/* TODO: Add last part of Target Group ARN */'
-const lb = '/* TODO: Add last part of Load Balancer ARN */'
+const cw = new AWS.CloudWatch();
+const alarmName = "hamster-elb-alarm";
+const topicArn = "arn:aws:sns:us-east-1:605414079101:hamster-topic";
+const tg = "targetgroup/hamsterTG/5827023948a8edc6";
+const lb = "app/hamsterELB/e0eaef77f07feeea";
 
-createCloudWatchAlarm(alarmName, topicArn, tg, lb)
-.then(data => console.log(data))
+createCloudWatchAlarm(alarmName, topicArn, tg, lb).then((data) =>
+  console.log(data)
+);
 
-function createCloudWatchAlarm (alarmName, topicArn, tg, lb) {
-  // TODO: Create params const object
+function createCloudWatchAlarm(alarmName, topicArn, tg, lb) {
+  const params = {
+    AlarmName: alarmName,
+    ComparisonOperator: "LessThanThreshold",
+    Threshold: 1,
+    EvaluationPeriods: 1,
+    Period: 60,
+    MetricName: "HealthyHostCount",
+    Namespace: "AWS/ApplicationELB",
+    AlarmActions: [topicArn],
+    Dimensions: [
+      { Name: "TargetGroup", Value: tg },
+      { Name: "LoadBalancer", Value: lb },
+    ],
+    Statistic: "Average",
+    TreatMissingData: "breaching",
+  };
 
   return new Promise((resolve, reject) => {
-    // TODO: Call putMetricAlarm
-  })
+    cw.putMetricAlarm(params, (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
 }

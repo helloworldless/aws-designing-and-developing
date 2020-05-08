@@ -1,9 +1,7 @@
-// Imports
 const AWS = require("aws-sdk");
 
 AWS.config.update({ region: "us-east-1" });
 
-// Declare local variables
 const ec2 = new AWS.EC2();
 const volumeId = "vol-092c9cec60e963cb8";
 const instanceId = "i-0fc76189b6b68480f";

@@ -1,9 +1,7 @@
-// Imports
 const AWS = require("aws-sdk");
 
 AWS.config.update({ region: "us-east-1" });
 
-// Declare local variables
 const autoScaling = new AWS.AutoScaling();
 const asgName = "hamsterASG";
 const lcName = "hamsterLC";

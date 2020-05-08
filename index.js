@@ -65,7 +65,7 @@ const init = async () => {
   // initialize database and start server
   usersInit()
     // Commented out until SQS is configured
-    // .then(() => queueInit())
+    .then(() => queueInit())
     .then(async () => {
       try {
         await server.start();

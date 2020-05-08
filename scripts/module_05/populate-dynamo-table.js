@@ -1,4 +1,3 @@
-// Imports
 const AWS = require("aws-sdk");
 const helpers = require("./helpers");
 

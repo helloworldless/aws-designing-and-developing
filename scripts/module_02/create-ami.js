@@ -1,4 +1,3 @@
-// Imports
 const AWS = require("aws-sdk");
 
 const region = "us-east-1";
